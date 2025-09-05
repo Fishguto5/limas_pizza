@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react';
 import PizzaCard from '../components/pizzacard';
 
-// (O tipo Pizza e a lista de pizzasDisponiveis continuam iguais)
-type Pizza = {
+type Pizza = { //cria o tipo Pizza, criando 
   id: number;
   nome: string;
   ingredientes: string[];
@@ -19,7 +18,7 @@ const pizzas: Pizza[] = [
 
 export default function CatalogoPizzaria() {
 
-  // HOOK 1: Nossos estados (a "memória" do componente)
+  // UseState, aqui a gente define a variável e uma função respectiva a ela
   const [carrinho, setCarrinho] = useState<Pizza[]>([]);
   const [mensagem, setMensagem] = useState<string>(''); 
 
@@ -32,7 +31,6 @@ export default function CatalogoPizzaria() {
   }, [carrinho]); //só executa essa lógica quando o `carrinho` mudar.
 
 
-  // --- A função que o usuário dispara ---
   function handleAdicionarAoCarrinho(pizzaEscolhida: Pizza) {
     setCarrinho([...carrinho, pizzaEscolhida]); //adiciona o pizza no carrinho
   }
