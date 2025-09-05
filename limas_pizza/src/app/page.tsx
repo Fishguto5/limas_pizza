@@ -1,8 +1,9 @@
-'use client'; 
+'use client';
 
 import { useState, useEffect } from 'react';
-import PizzaCard from '../components/pizzacard'; 
+import PizzaCard from '../components/pizzacard';
 
+// (O tipo Pizza e a lista de pizzasDisponiveis continuam iguais)
 type Pizza = {
   id: number;
   nome: string;
@@ -10,35 +11,31 @@ type Pizza = {
   preco: number;
 };
 
-const pizzasDisponiveis: Pizza[] = [
-  { id: 1, nome: 'Calabresa', ingredientes: ['Molho de tomate', 'Mussarela', 'Calabresa', 'Cebola'], preco: 45.50 },
-  { id: 2, nome: 'Margherita', ingredientes: ['Molho de tomate', 'Mussarela', 'Manjericão fresco'], preco: 42.00 },
-  { id: 3, nome: 'Frango com Catupiry', ingredientes: ['Molho de tomate', 'Mussarela', 'Frango desfiado', 'Catupiry'], preco: 52.90 },
-  { id: 4, nome: 'Portuguesa', ingredientes: ['Molho de tomate', 'Mussarela', 'Presunto', 'Ovo', 'Cebola', 'Azeitona'], preco: 48.00 },
+const pizzas: Pizza[] = [
+    { id: 1, nome: 'Calabresa', ingredientes: ['Molho de tomate', 'Mussarela', 'Calabresa', 'Cebola'], preco: 45.50 },
+    { id: 2, nome: 'Margherita', ingredientes: ['Molho de tomate', 'Mussarela', 'Manjericão fresco'], preco: 42.00 },
+    { id: 3, nome: 'Frango com Catupiry', ingredientes: ['Molho de tomate', 'Mussarela', 'Frango desfiado', 'Catupiry'], preco: 52.90 },
 ];
 
-export default function CatalogoPage() {
-  const [carrinho, setCarrinho] = useState<Pizza[]>([]);
-  const [notificacao, setNotificacao] = useState<string>('');
+export default function CatalogoPizzaria() {
 
-  const handleAdicionarAoCarrinho = (pizza: Pizza) => {
-    setCarrinho([...carrinho, pizza]);
-    setNotificacao(`🍕 ${pizza.nome} foi adicionada ao carrinho!`);
-  };
+  // HOOK 1: Nossos estados (a "memória" do componente)
+  const [carrinho, setCarrinho] = useState<Pizza[]>([]);
+  const [mensagem, setMensagem] = useState<string>(''); 
 
   useEffect(() => {
-    
-    if (notificacao) {
-      // ...cria um timer para limpar a notificação após 3 segundos (3000 ms)
-      const timer = setTimeout(() => {
-        setNotificacao(''); // Limpa a notificação, fazendo-a desaparecer da tela
-      }, 3000);
-      // Função de limpeza (cleanup function):
-      // Isso é importante! Se o usuário adicionar outra pizza antes dos 3s,
-      // o timer anterior é cancelado, evitando bugs. (opcional)
-      return () => clearTimeout(timer);
+    if (carrinho.length > 0) {
+      const ultimaPizza = carrinho[carrinho.length - 1];
+      const novaMensagem = `Oba! ${ultimaPizza.nome} está no seu carrinho! 🍕`;
+      setMensagem(novaMensagem);
     }
-  }, [notificacao]); 
+  }, [carrinho]); //só executa essa lógica quando o `carrinho` mudar.
+
+
+  // --- A função que o usuário dispara ---
+  function handleAdicionarAoCarrinho(pizzaEscolhida: Pizza) {
+    setCarrinho([...carrinho, pizzaEscolhida]); //adiciona o pizza no carrinho
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -52,17 +49,15 @@ export default function CatalogoPage() {
       </header>
 
       <main className="container mx-auto p-8">
-        {notificacao && (
-          <div className="bg-green-500 text-white text-center p-3 rounded-lg mb-8 shadow-lg transition-all duration-300">
-            {notificacao}
+        {mensagem && (
+          <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6 rounded-md shadow-md" role="alert">
+            <p className="font-bold">{mensagem}</p>
           </div>
         )}
 
         <h2 className="text-2xl font-semibold mb-6 text-gray-800">Nosso Cardápio</h2>
-        
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {pizzasDisponiveis.map((pizza) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {pizzas.map((pizza) => (
             <PizzaCard
               key={pizza.id}
               pizza={pizza}
@@ -73,5 +68,4 @@ export default function CatalogoPage() {
       </main>
     </div>
   );
-
 }

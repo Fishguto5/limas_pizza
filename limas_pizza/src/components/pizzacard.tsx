@@ -1,6 +1,7 @@
 
 'use client';
-
+import Image from "next/image";
+import pizzaImg from "@/assets/imagem_pizza.jpg"
 type Pizza = {
   id: number;
   nome: string;
@@ -16,11 +17,7 @@ type PizzaCardProps = {
 export default function PizzaCard({ pizza, onAdicionarAoCarrinho }: PizzaCardProps) {
   return (
     <div className="border rounded-lg shadow-lg overflow-hidden bg-white hover:shadow-xl transition-shadow duration-300">
-      <img
-        src={`https://source.unsplash.com/400x300/?pizza,${pizza.id}`} 
-        alt={`Pizza de ${pizza.nome}`}
-        className="w-full h-48 object-cover"
-      />
+      <Image src={pizzaImg} alt=""/>
       <div className="p-4">
         <h3 className="text-xl font-bold text-gray-800 mb-2">{pizza.nome}</h3>
         <p className="text-gray-600 text-sm mb-4 h-12">
