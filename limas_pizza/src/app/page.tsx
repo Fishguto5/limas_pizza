@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import PizzaCard from '../components/pizzacard';
 
-type Pizza = { //cria o tipo Pizza, criando 
+type Pizza = { //cria o tipo Pizza
   id: number;
   nome: string;
   ingredientes: string[];
@@ -22,11 +22,16 @@ export default function CatalogoPizzaria() {
   const [carrinho, setCarrinho] = useState<Pizza[]>([]);
   const [mensagem, setMensagem] = useState<string>(''); 
 
+  //exibe na tela a atualização após a mudança na variável carrinho
   useEffect(() => {
     if (carrinho.length > 0) {
       const ultimaPizza = carrinho[carrinho.length - 1];
       const novaMensagem = `Oba! ${ultimaPizza.nome} está no seu carrinho! 🍕`;
       setMensagem(novaMensagem);
+
+      const timerId = setTimeout(() => {
+        setMensagem('');
+      }, 3000); //faz  notificação aparecer por um tempo determinado
     }
   }, [carrinho]); //só executa essa lógica quando o `carrinho` mudar.
 
