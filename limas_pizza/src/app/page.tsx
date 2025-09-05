@@ -3,7 +3,7 @@
  //importa os hooks useState e useEffect
 import PizzaCard from '../components/pizzacard'; //importando o componente da pizza
 
-type Pizza = { //interface das pizzas
+type Pizza = { //define o tipo Pizza
   id: number;
   nome: string;
   ingredientes: string[];
