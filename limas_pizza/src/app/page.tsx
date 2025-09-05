@@ -1,17 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import PizzaCard from '../components/pizzacard';
+ //importa os hooks useState e useEffect
+import PizzaCard from '../components/pizzacard'; //importando o componente da pizza
 
-// (O tipo Pizza e a lista de pizzasDisponiveis continuam iguais)
-type Pizza = {
+type Pizza = { //interface das pizzas
   id: number;
   nome: string;
   ingredientes: string[];
   preco: number;
 };
 
-const pizzas: Pizza[] = [
+const pizzas: Pizza[] = [ //defininfo os tipos das pizzas
     { id: 1, nome: 'Calabresa', ingredientes: ['Molho de tomate', 'Mussarela', 'Calabresa', 'Cebola'], preco: 45.50 },
     { id: 2, nome: 'Margherita', ingredientes: ['Molho de tomate', 'Mussarela', 'Manjericão fresco'], preco: 42.00 },
     { id: 3, nome: 'Frango com Catupiry', ingredientes: ['Molho de tomate', 'Mussarela', 'Frango desfiado', 'Catupiry'], preco: 52.90 },
@@ -19,23 +18,15 @@ const pizzas: Pizza[] = [
 
 export default function CatalogoPizzaria() {
 
-  // HOOK 1: Nossos estados (a "memória" do componente)
-  const [carrinho, setCarrinho] = useState<Pizza[]>([]);
-  const [mensagem, setMensagem] = useState<string>(''); 
+  //Aqui vai o useState
 
-  useEffect(() => {
-    if (carrinho.length > 0) {
-      const ultimaPizza = carrinho[carrinho.length - 1];
-      const novaMensagem = `Oba! ${ultimaPizza.nome} está no seu carrinho! 🍕`;
-      setMensagem(novaMensagem);
-    }
-  }, [carrinho]); //só executa essa lógica quando o `carrinho` mudar.
+  //Aqui vai o useEffect
 
+  function teste (){
 
-  // --- A função que o usuário dispara ---
-  function handleAdicionarAoCarrinho(pizzaEscolhida: Pizza) {
-    setCarrinho([...carrinho, pizzaEscolhida]); //adiciona o pizza no carrinho
   }
+  //função que adiciona a pizza no carrinho
+  
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -43,17 +34,13 @@ export default function CatalogoPizzaria() {
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-3xl font-bold text-red-600">Limas Pizza</h1>
           <div className="text-lg font-semibold text-gray-700">
-            Itens no Carrinho: <span className="text-blue-600 font-bold">{carrinho.length}</span>
+            Itens no Carrinho: <span className="text-blue-600 font-bold">Quantidade de pizzas no carrinho</span>
           </div>
         </div>
       </header>
 
       <main className="container mx-auto p-8">
-        {mensagem && (
-          <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6 rounded-md shadow-md" role="alert">
-            <p className="font-bold">{mensagem}</p>
-          </div>
-        )}
+        {/* dispara a mensagem que a pizza foi adicionada no carrinho */}
 
         <h2 className="text-2xl font-semibold mb-6 text-gray-800">Nosso Cardápio</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -61,7 +48,7 @@ export default function CatalogoPizzaria() {
             <PizzaCard
               key={pizza.id}
               pizza={pizza}
-              onAdicionarAoCarrinho={handleAdicionarAoCarrinho}
+              onAdicionarAoCarrinho = {teste}//função que adiciona a pizza no carrinho
             />
           ))}
         </div>
